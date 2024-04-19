@@ -40,7 +40,7 @@ public class Topic_04_XPath_Css {
         driver.findElement(By.id("txtCPassword")).clear();
         driver.findElement(By.id("txtPhone")).clear();
         driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
-
+        //varify
         Assert.assertEquals(driver.findElement(By.id("txtFirstname-error")).getText(), "Vui lòng nhập họ tên");
         Assert.assertEquals(driver.findElement(By.id("txtEmail-error")).getText(), "Vui lòng nhập email");
         Assert.assertEquals(driver.findElement(By.id("txtCEmail-error")).getText(), "Vui lòng nhập lại địa chỉ email");
