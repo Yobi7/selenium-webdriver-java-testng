@@ -40,7 +40,7 @@ public class Topic_04_XPath_Css {
         driver.findElement(By.id("txtCPassword")).clear();
         driver.findElement(By.id("txtPhone")).clear();
         driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
-        //varify
+        
         Assert.assertEquals(driver.findElement(By.id("txtFirstname-error")).getText(), "Vui lòng nhập họ tên");
         Assert.assertEquals(driver.findElement(By.id("txtEmail-error")).getText(), "Vui lòng nhập email");
         Assert.assertEquals(driver.findElement(By.id("txtCEmail-error")).getText(), "Vui lòng nhập lại địa chỉ email");
@@ -56,7 +56,16 @@ public class Topic_04_XPath_Css {
     public void Register_02_Invalid_Email_Address() {
         driver.get("https://alada.vn/tai-khoan/dang-ky.html");
 
+        driver.findElement(By.id("txtFirstname")).sendKeys("Yobi");
+        driver.findElement(By.id("txtEmail")).sendKeys("123@123@123");
+        driver.findElement(By.id("txtCEmail")).sendKeys("123@123@123");
+        driver.findElement(By.id("txtPassword")).sendKeys("123456");
+        driver.findElement(By.id("txtCPassword")).sendKeys("123456");
+        driver.findElement(By.id("txtPhone")).sendKeys("0987654321");
+        driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
 
+        Assert.assertEquals(driver.findElement(By.id("txtEmail-error")).getText(), "Vui lòng nhập email hợp lệ");
+        Assert.assertEquals(driver.findElement(By.id("txtCEmail-error")).getText(), "Email nhập lại không đúng");
 
     }
 
@@ -72,6 +81,16 @@ public class Topic_04_XPath_Css {
         driver.get("https://alada.vn/tai-khoan/dang-ky.html");
 
 
+        driver.findElement(By.id("txtFirstname")).sendKeys("Yobi");
+        driver.findElement(By.id("txtEmail")).sendKeys("yobi@gmail.com");
+        driver.findElement(By.id("txtCEmail")).sendKeys("yobi@gmail.com");
+        driver.findElement(By.id("txtPassword")).sendKeys("12345");
+        driver.findElement(By.id("txtCPassword")).sendKeys("12345");
+        driver.findElement(By.id("txtPhone")).sendKeys("0987654321");
+        driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
+
+        Assert.assertEquals(driver.findElement(By.id("txtPassword-error")).getText(), "Mật khẩu phải có ít nhất 6 ký tự");
+        Assert.assertEquals(driver.findElement(By.id("txtCPassword-error")).getText(), "Mật khẩu phải có ít nhất 6 ký tự");
     }
 
     @Test
