@@ -52,8 +52,14 @@ public class Topic_06_Webbrowser_Commands {
         List<WebElement> checkboxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
         checkboxes.get(1).click();
 
-
-
+        //Lay du lieu ra
+        driver.getCurrentUrl();
+        driver.getPageSource();
+        driver.getTitle();
+        driver.getWindowHandle();
+        driver.getWindowHandles();
+        
+        
 
 
 
