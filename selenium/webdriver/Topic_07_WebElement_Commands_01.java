@@ -10,9 +10,8 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class Topic_07_WebElement_Commands {
+public class Topic_07_WebElement_Commands_01 {
 
     WebDriver driver;
 
@@ -104,17 +103,12 @@ public class Topic_07_WebElement_Commands {
         driver.findElement(By.id("")).submit();
 
 
-
-
-
-
-
-
     }
 
 
     @AfterClass
-    public void afterClass() { }
+    public void afterClass() {
+    }
 
 
 }

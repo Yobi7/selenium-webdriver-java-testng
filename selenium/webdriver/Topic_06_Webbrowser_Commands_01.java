@@ -13,9 +13,8 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class Topic_06_Webbrowser_Commands {
+public class Topic_06_Webbrowser_Commands_01 {
 
     WebDriver driver;
     WebElement element;
