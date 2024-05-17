@@ -29,7 +29,7 @@ public class Topic_10_Custom_Dropdown {
         //      2.2 - Chi chứa 1 phaần
         //      3.1 - item can chon hien thi thì click vào
         //      3.2 - can scroll de chon item can chon
-        //      4 - kiem tra text item = item can chọn
+        //      4 - kiem tra text item = item can chọn hha
 
     }
 

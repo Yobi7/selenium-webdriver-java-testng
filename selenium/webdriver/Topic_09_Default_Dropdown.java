@@ -88,7 +88,6 @@ public class Topic_09_Default_Dropdown {
         Assert.assertEquals(driver.findElement(By.cssSelector("input#Email")).getAttribute("value"),emailAddress);
         Assert.assertEquals(driver.findElement(By.cssSelector("input#Company")).getAttribute("value"),companyName);
 
-
     }
 
 
