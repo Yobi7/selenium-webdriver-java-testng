@@ -1,29 +1,35 @@
 package webdriver;
 
-import java.time.Duration;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_01_Check_Environment {
+import java.time.Duration;
+import java.util.Random;
+
+public class Topic_10_Custom_Dropdown {
     WebDriver driver;
 
     @BeforeClass
     public void beforeClass() {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-        driver.get("https://www.facebook.com/");
+        driver.get("http://jqueryui.com/resources/demos/selectmenu/default.html");
     }
 
     @Test
     public void TC_01_() {
+        //Click vao 1 thẻ để nó  heết các item ben trong dropdown ra
+        driver.findElement(By.cssSelector("span#number-button")).click();
+
+        //      2.1 - ổ ra chứa heết data
+        //      2.2 - Chi chứa 1 phaần
+        //      3.1 - item can chon hien thi thì click vào
+        //      3.2 - can scroll de chon item can chon
+        //      4 - kiem tra text item = item can chọn
 
     }
 
@@ -34,7 +40,7 @@ public class Topic_01_Check_Environment {
 
     @Test
     public void TC_03_() {
-
+        
     }
 
     @AfterClass
