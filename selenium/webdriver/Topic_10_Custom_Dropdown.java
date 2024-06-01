@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -46,13 +47,31 @@ public class Topic_10_Custom_Dropdown {
     }
 
     @Test
-    public void TC_02_() {
+    public void TC_02_React() {
+        driver.get("https://react.semantic-ui.com/maximize/dropdown-example-selection/");
+
+        selectItemInDropdown("div.ui.fluid","div.item>span.text","Elliot Fu");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(),"Elliot Fu");
 
     }
 
     @Test
-    public void TC_03_() {
+    public void TC_03_Vue() {
+        driver.get("https://mikerodham.github.io/vue-dropdowns/");
+
+        selectItemInDropdown("li.dropdown-toggle","ul.dropdown-menu a","Second Option");
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.dropdown-toggle")).getText(),"Second Option");
         
+    }
+
+    @Test
+    public void TC_04_Editable() {
+        driver.get("https://react.semantic-ui.com/maximize/dropdown-example-search-selection/");
+
+        searchItemInDropdown("input.search","div.item span","Algeria");
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.divider.text")).getText(),"Algeria");
+
     }
 
     @AfterClass
@@ -75,7 +94,23 @@ public class Topic_10_Custom_Dropdown {
 
     public void selectItemInDropdown(String parentCss, String childItemCss, String itemTextExpected){
         driver.findElement(By.cssSelector(parentCss)).click(); //"span#number-button"
+        sleepInSeconds(1);
+        // wait + tìm element
+        List<WebElement> allItems = explicitWait.until(ExpectedConditions.
+                presenceOfAllElementsLocatedBy(By.cssSelector(childItemCss))); //"ul#number-menu div"
+        for (WebElement item : allItems){
+            if(item.getText().equals(itemTextExpected)){
+                item.click();
+                break;
+            }
+        }
+    }
 
+    public void searchItemInDropdown(String parentCss, String childItemCss, String itemTextExpected){
+
+        driver.findElement(By.cssSelector(parentCss)).clear(); //"span#number-button"
+        driver.findElement(By.cssSelector(parentCss)).sendKeys(itemTextExpected); //"span#number-button"
+        sleepInSeconds(1);
         // wait + tìm element
         List<WebElement> allItems = explicitWait.until(ExpectedConditions.
                 presenceOfAllElementsLocatedBy(By.cssSelector(childItemCss))); //"ul#number-menu div"
