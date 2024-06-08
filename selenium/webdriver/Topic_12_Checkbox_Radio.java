@@ -110,6 +110,17 @@ public class Topic_12_Checkbox_Radio {
 
     }
 
+    @Test
+    public void TC_06_Custom_Google_Docs(){
+        driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
+
+        By canThoRadio = By.xpath("//div[@aria-label = 'Cần Thơ']");
+        Assert.assertEquals(driver.findElement(canThoRadio).getAttribute("aria-checked"),"false");
+
+        driver.findElement(canThoRadio).click();
+        sleepInSeconds(2);
+    }
+
 
 
 
