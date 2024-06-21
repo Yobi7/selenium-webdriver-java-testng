@@ -59,6 +59,7 @@ public class Topic_13_Alert {
         Assert.assertEquals(alert.getText(),"I am a JS Alert");
 
         alert.accept();
+        
         sleepInSeconds(3);
 
         Assert.assertEquals(driver.findElement(resultText).getText(),"You clicked an alert successfully");
