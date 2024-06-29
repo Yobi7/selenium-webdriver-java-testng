@@ -11,13 +11,14 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.Random;
 
-public class Topic_24_Wait_Implicit {
+public class Topic_25_Wait_Static_Dead_Hard {
     WebDriver driver;
 
     @BeforeClass
     public void beforeClass() {
         driver = new FirefoxDriver();
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        driver.get("https://www.facebook.com/");
     }
 
     @Test
@@ -25,6 +26,8 @@ public class Topic_24_Wait_Implicit {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get("https://automationfc.github.io/dynamic-loading/");
         driver.findElement(By.cssSelector("div#start>button")).click();
+
+        sleepInSeconds(5);
 
         Assert.assertEquals(driver.findElement(By.cssSelector("div#finish>h4")).getText(),"Hello World!");
 
@@ -34,6 +37,9 @@ public class Topic_24_Wait_Implicit {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         driver.get("https://automationfc.github.io/dynamic-loading/");
         driver.findElement(By.cssSelector("div#start>button")).click();
+
+        sleepInSeconds(3);
+
         Assert.assertEquals(driver.findElement(By.cssSelector("div#finish>h4")).getText(),"Hello World!");
 
     }
@@ -43,10 +49,11 @@ public class Topic_24_Wait_Implicit {
         driver.get("https://automationfc.github.io/dynamic-loading/");
         driver.findElement(By.cssSelector("div#start>button")).click();
 
+        sleepInSeconds(10);
+
         Assert.assertEquals(driver.findElement(By.cssSelector("div#finish>h4")).getText(),"Hello World!");
 
     }
-
 
     @AfterClass
     public void afterClass() {
