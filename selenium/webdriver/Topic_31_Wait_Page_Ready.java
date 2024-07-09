@@ -1,9 +1,10 @@
 package webdriver;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -11,7 +12,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.Random;
 
 public class Topic_31_Wait_Page_Ready {
     WebDriver driver;
@@ -21,24 +21,26 @@ public class Topic_31_Wait_Page_Ready {
     @BeforeClass
     public void beforeClass() {
         driver = new FirefoxDriver();
-
-
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
     }
 
     @Test
-    public void TC_01_Equal_5_Second() {
-        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        driver.get("https://automationfc.github.io/dynamic-loading/");
-        driver.findElement(By.cssSelector("div#start>button")).click();
+    public void TC_01_AjaxLoading() {
+        driver.get("https://admin-demo.nopcommerce.com");
 
-        //Chờ cho tới khi Loading invisible
-        //explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div#loading")));
+        driver.findElement(By.cssSelector("input#Email")).clear();
+        driver.findElement(By.cssSelector("input#Email")).sendKeys("admin@yourstore.com");
+        driver.findElement(By.cssSelector("input#Password")).clear();
+        driver.findElement(By.cssSelector("input#Password")).sendKeys("admin");
+        driver.findElement(By.cssSelector("button.login-button")).click();
 
-        //Wait cho cái text xuất hiện
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div#finish>h4")));
+        Assert.assertTrue(isPageLoadedSuccess());
 
-        Assert.assertEquals(driver.findElement(By.cssSelector("div#finish>h4")).getText(),"Hello World!");
+        driver.findElement(By.xpath("//i[contains(@class,'fa-user')]/following-sibling::p")).click();
+        driver.findElement(By.xpath("//ul[contains(@style, 'display: block;')]//i[contains(@class,'fa-dot-circle')]/following-sibling::p[contains(string(), ' Customers')]")).click();
+
+
 
     }
 
@@ -48,5 +50,23 @@ public class Topic_31_Wait_Page_Ready {
         driver.quit();
     }
 
+    public boolean isPageLoadedSuccess() {
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                return (Boolean) jsExecutor.executeScript("return (window.jQuery != null) && (jQuery.active === 0);");
+            }
+        };
+
+        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                return jsExecutor.executeScript("return document.readyState").toString().equals("complete");
+            }
+        };
+        return explicitWait.until(jQueryLoad) && explicitWait.until(jsLoad);
+    }
 
 }
