@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.Random;
 
 public class Topic_08_Textbox_TextArea {
 
@@ -25,37 +26,57 @@ public class Topic_08_Textbox_TextArea {
         driver.get("http://live.techpanda.org/");
 
         driver.findElement(By.xpath("//div[@class = 'footer'] //a[@title='My Account']")).click();
-        sleepInSeconds(2);
+
+        // Register
+        driver.findElement(By.xpath("//span[text() = 'Create an Account']")).click();
+
+        String firstName = "Manual", lastName = "FC", emailAddress = getEmailAddress(), password = "123456789";
+        String fullName = firstName + " " + lastName;
+
+        driver.findElement(By.cssSelector("input#firstname")).sendKeys(firstName);
+        driver.findElement(By.cssSelector("input#lastname")).sendKeys(lastName);
+        driver.findElement(By.cssSelector("input#email_address")).sendKeys(emailAddress);
+        driver.findElement(By.cssSelector("input#password")).sendKeys(password);
+        driver.findElement(By.cssSelector("input#confirmation")).sendKeys(password);
+        driver.findElement(By.cssSelector("button[title = 'Register']")).click();
+
+
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.success-msg span")).getText(),"Thank you for registering with Main Website Store.");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.welcome-msg strong")).getText(),"Hello, " + fullName + "!");
+
+        String contactInfo = driver.findElement(By.xpath("//h3[text() = 'Contact Information']/parent::div//following-sibling::div/p")).getText();
+        Assert.assertTrue(contactInfo.contains(fullName));
+        Assert.assertTrue(contactInfo.contains(emailAddress));
+
+        // Logout
+        driver.findElement(By.cssSelector("a.skip-account")).click();
+        driver.findElement(By.cssSelector("a[title = 'Log Out']")).click();
+
+        // Login
+        driver.findElement(By.xpath("//div[@class = 'footer'] //a[@title='My Account']")).click();
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys(emailAddress);
+        driver.findElement(By.cssSelector("input#pass")).sendKeys(password);
 
         driver.findElement(By.cssSelector("button#send2")).click();
 
-        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-required-entry-email")).getText(),"This is a required field.");
-        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-required-entry-pass")).getText(),"This is a required field.");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.welcome-msg strong")).getText(),"Hello, " + fullName + "!");
+        contactInfo = driver.findElement(By.xpath("//h3[text() = 'Contact Information']/parent::div//following-sibling::div/p")).getText();
+        Assert.assertTrue(contactInfo.contains(fullName));
+        Assert.assertTrue(contactInfo.contains(emailAddress));
 
+        System.out.println("Email / paswrord: " + getEmailAddress() + " - " + password);
 
-    }
-    @Test
-    public void Login_02_Invalid_Email() {
-
-
-    }
-
-    @Test
-    public void Login_03_Password() {
-
-
+        // Logout
+        driver.findElement(By.cssSelector("a.skip-account")).click();
+        driver.findElement(By.cssSelector("a[title = 'Log Out']")).click();
     }
 
-    @Test
-    public void Login_04_Incorrect_Email_Password() {
-
-
-    }
 
 
     @AfterClass
-    public void afterClass() {
-    }
+    public void afterClass() { driver.quit();    }
 
     public void sleepInSeconds(long timeInSecond){
         try {
@@ -63,6 +84,12 @@ public class Topic_08_Textbox_TextArea {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public  String getEmailAddress(){
+        Random rand = new Random();
+        return "automation" + rand.nextInt(99999)+"@gmail.net";
+
     }
 
 }
